@@ -8,6 +8,8 @@ public class CharacterViewController : MonoBehaviour
 {
     private CharacterMovement _characterMovement;
     private CharacterInteractor _characterInteractor;
+    private CharacterHabilities _characterHabilities;
+
 
     private Damageable _damageable;
     
@@ -34,6 +36,9 @@ public class CharacterViewController : MonoBehaviour
             Debug.LogError("[CharacterViewController] CharacterInteractor is null! Add a CharacterInteractor component to the GameObject.");
         }
         _characterInteractor.OnInteraction += OnInteraction;
+
+        _characterHabilities = GetComponent<CharacterHabilities>();
+        _characterHabilities.OnAttack += OnAttack; 
 
         _damageable = GetComponent<Damageable>();
         if(_damageable == null)
@@ -70,6 +75,10 @@ public class CharacterViewController : MonoBehaviour
         {
             _animator.SetTrigger("emote_no");
         }
+    }
+    private void OnAttack()
+    {
+        _animator.SetTrigger("attack");
     }
     void Update()
     {

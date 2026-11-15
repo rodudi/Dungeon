@@ -1,17 +1,34 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using Gameplay.Interactions;
 namespace Gameplay.Character{
     public class UserInputMovement : MonoBehaviour
     {
         private CharacterMovement _characterMovement;
+        private CharacterHabilities _characterHabilities;
+
+        private CharacterInteractor _characterInteractor;
         void Awake()
         {
             _characterMovement = GetComponent<CharacterMovement>();
-            if(_characterMovement == null)
+
+            if (_characterMovement == null)
             {
                 Debug.LogError("[UserInputMovement] CharacterMovement is null! Add a CharacterMovement component to the GameObject.");
             }
+            _characterHabilities = GetComponent<CharacterHabilities>();
+
+            if (_characterHabilities == null)
+            {
+                Debug.LogError("[UserInputMovement] CharacterHabilities is null! Add a CharacterHabilities component to the GameObject.");
+            }
+            _characterInteractor = GetComponent<CharacterInteractor>();
+
+            if (_characterInteractor == null)
+            {
+                Debug.LogError("[UserInputMovement] CharacterHabilities is null! Add a CharacterHabilities component to the GameObject.");
+            }
+
         }
         void Update()
         {
@@ -31,6 +48,14 @@ namespace Gameplay.Character{
             if (InputSystem.actions["Jump"].WasReleasedThisFrame())
             {
                 _characterMovement.CancelJump();
+            }
+            if (InputSystem.actions["Attack"].WasPressedThisFrame())
+            {
+                _characterHabilities.Attack();
+            }
+            if (InputSystem.actions["Interact"].WasPressedThisFrame())
+            {
+                _characterInteractor.TriggerInteraction();
             }
         }
     }

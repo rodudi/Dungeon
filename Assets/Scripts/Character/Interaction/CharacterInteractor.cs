@@ -14,8 +14,11 @@ namespace Gameplay.Interactions{
         void Update()
         {
             UpdateInteractablesByDistance();
+        }
+        public void TriggerInteraction()
+        {
 
-            if (_interactionEnabled && InputSystem.actions["Interact"].WasPressedThisFrame())
+            if (_interactionEnabled )
             {
                 if(closestInteractable != null)
                 {
